@@ -173,13 +173,38 @@ ExpiryAlert is designed around local-first inventory management.
 - [ ] Test Android and iOS notification behavior.
 - [ ] Prepare the Google Play Store and Apple App Store releases.
 
-## Contributing
+## Monetization
 
-Contributions, bug reports, and feature suggestions are welcome. Please open an issue to discuss significant changes before submitting a pull request.
+ExpiryAlert may use Google AdMob to display advertisements and support ongoing development and maintenance.
+
+Planned monetization features:
+
+- **Banner Ads** — Display ads in appropriate, non-intrusive areas.
+- **Interstitial Ads** — Consider ads at suitable navigation points, never during critical expiry reminders or essential user actions.
+- **Privacy and Consent** — Implement applicable advertising consent requirements and provide appropriate privacy disclosures.
+- **Ad-Free Experience** — Premium options may be considered in the future.
+
+Advertising integration will be implemented with user experience, privacy, and platform policies in mind.
+
+## Privacy and Advertising
+
+ExpiryAlert is designed as an offline-first application. Household inventory and expiry dates are intended to remain on the device unless optional cloud features are introduced.
+
+If advertising is enabled:
+
+- Google Mobile Ads SDK may process device and advertising-related information as described in Google's policies.
+- Required consent and privacy controls will be implemented where applicable.
+- Test ad units will be used during development.
+- Production ad units will be configured before release.
+- A privacy policy will disclose relevant data collection, advertising, and third-party services.
+
+Advertising SDKs and their data practices will be reviewed before publishing the application.
 
 ## License
 
-This project is currently under development. A license will be added before distribution.
+ExpiryAlert is proprietary software. All rights are reserved by the copyright holder.
+
+See the [LICENSE](LICENSE) file for the applicable terms. No license to use, copy, modify, or redistribute this software is granted without explicit written permission, except where applicable law provides otherwise.
 
 ---
 
