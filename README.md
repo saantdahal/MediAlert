@@ -1,211 +1,119 @@
-# ExpiryAlert
+# MediAlert
 
-**Track expiry dates. Reduce waste. Stay informed.**
+**Never miss a dose. Never use an expired medicine.**
 
-ExpiryAlert is an offline-first Flutter application that helps users manage household products and keep track of their expiry dates. From packaged food and cosmetics to medicines and other date-sensitive items, ExpiryAlert makes it easier to organize inventory and receive timely reminders before products expire.
+MediAlert is a medicine management system with two core purposes:
 
-The app supports QR code and barcode scanning, OCR-based expiry date recognition, local notifications, and Firebase Cloud Messaging (FCM) for remote notifications.
+- **Medicine Expiry Alert** — store the expiry date of every medicine, get reminders as the date approaches, and clearly identify expired medicines.
+- **Medicine Time Reminder** — set the times to take each medicine, keep a daily schedule with notifications, and mark doses as **Taken** once done.
 
-## Features
+The project is split into three parts:
 
-- **Household Inventory** — Add, edit, delete, search, and organize products by category.
-- **QR & Barcode Scanning** — Scan product codes to identify products and simplify item entry.
-- **OCR Expiry Date Recognition** — Extract potential expiry dates from product packaging using on-device text recognition.
-- **Expiry Reminders** — Schedule notifications before products expire.
-- **Expiry Dashboard** — View expired items, upcoming expirations, and products that are still within their expiry period.
-- **Offline-First Storage** — Store inventory locally and access it without an internet connection.
-- **Firebase Cloud Messaging** — Support remote notifications and future cloud-connected features.
-- **Quantity Tracking** — Keep track of household stock and product quantities.
-- **Cross-Platform** — Built with Flutter for Android and iOS.
+| Folder | Description | Tech |
+|---|---|---|
+| [`mobile/`](mobile/README.md) | User-facing mobile app | Flutter (Dart) |
+| [`backend/`](backend/README.md) | REST API, authentication, notifications | Node.js, Express |
+| [`frontend/`](frontend/README.md) | Admin web panel for user management | Next.js (JSX) |
 
-## Tech Stack
+## Core Features — Version 1.0
 
-| Technology | Purpose |
-|---|---|
-| Flutter | Cross-platform application development |
-| Dart | Programming language |
-| BLoC | State management |
-| Drift / SQLite | Local relational database |
-| `mobile_scanner` | QR code and barcode scanning |
-| Google ML Kit Text Recognition | On-device OCR |
-| `flutter_local_notifications` | Local expiry reminders |
-| Firebase Core | Firebase initialization |
-| Firebase Cloud Messaging | Remote push notifications |
-| GetIt | Dependency injection |
-| `intl` | Date formatting and localization |
+### 1. Medicine Inventory
+- Medicine name, photo and category
+- Strength (e.g. 500 mg) and dosage form
+- Expiry date, quantity and unit
+- Batch number and optional notes
+- Search, filter and sort
 
-## How It Works
+### 2. Expiry Date Alerts
+- Reminders 30, 7, 3 and 1 day(s) before expiry
+- Expired medicines clearly shown in red
+- **Expiring Soon**, **Expired** and **Valid** filters
+- Clear warning not to use expired medicines
+- Customizable reminder days per user
 
-1. Add a household product manually or scan its QR code or barcode.
-2. Enter or confirm the product name, quantity, category, and expiry date.
-3. Optionally scan the packaging with OCR to detect a potential expiry date.
-4. Review the detected information and correct it if necessary.
-5. Save the product to the local inventory.
-6. Receive scheduled local notifications before the product expires.
+### 3. Medicine Time Reminder
+- Daily, weekly or selected-days schedule
+- Multiple doses per day
+- Start date and end date
+- Local notification at dose time
+- **Taken**, **Skip** and **Snooze** actions
+- Dose history and missed-dose tracking
 
-**Note:** A barcode does not necessarily contain an expiry date. Product identification and expiry-date recognition are separate processes. OCR results must be reviewed before saving.
+### 4. Stock & Refill Reminder
+- Track remaining medicine quantity
+- Reduce stock automatically when a dose is marked Taken
+- Refill notification when stock reaches a threshold
+- Update quantity when restocking
 
-## Notifications
+## Advanced Features — Version 1.1+
 
-ExpiryAlert uses two notification mechanisms:
+### 5. Barcode, QR & OCR Scanner
+- Identify a product by scanning its barcode
+- Read the name and printed expiry date from the packet using OCR
+- User confirms scanned data before it is saved
 
-### Local Notifications
-- Scheduled expiry reminders.
-- Configurable reminder intervals.
-- Notifications that do not require an internet connection once scheduled, subject to device permissions and operating-system restrictions.
+> A barcode may not contain an expiry date, and OCR results must always be verified manually.
 
-### Firebase Cloud Messaging
-- Remote push notifications.
-- Support for future announcements and cloud-connected functionality.
-- A foundation for optional backend-driven notifications.
+### 6. Family Profiles
+- Separate medicine list per family member
+- Member name and profile color
+- Organize schedules for children or elderly family members
+- Shared reminders and caregiver access (later)
 
-FCM requires a configured Firebase project and appropriate platform setup. Server-triggered notifications require a trusted backend or another authorized sender. FCM does not independently schedule expiry reminders.
+### 7. Adherence & History
+- Daily/weekly dose completion summary
+- History of missed and skipped doses
+- Medicine start/end history
+- Exportable report
 
-## Architecture
+> Reports are for personal tracking only and are not a replacement for a doctor's advice.
 
-The project follows a feature-oriented structure with BLoC state management, repository abstractions, and local persistence.
+### 8. Privacy & Backup
+- Main features work offline
+- Local database backup and restore
+- Optional PIN/biometric lock
+- Option to delete all data
+- Optional cloud sync — **opt-in, never on by default**, since medicine data is sensitive
+
+## System Overview
 
 ```text
-lib/
-├── core/
-│   ├── database/
-│   ├── di/
-│   ├── notifications/
-│   ├── services/
-│   └── utils/
-├── features/
-│   ├── dashboard/
-│   │   ├── data/
-│   │   ├── domain/
-│   │   └── presentation/
-│   ├── inventory/
-│   │   ├── data/
-│   │   ├── domain/
-│   │   └── presentation/
-│   ├── scanner/
-│   │   ├── data/
-│   │   └── presentation/
-│   └── settings/
-│       └── presentation/
-├── app/
-└── main.dart
+ Flutter app (mobile)  ──REST──▶  Express API (backend)  ──▶  Database
+        ▲                               ▲
+        │ local + push notifications    │ REST (admin)
+        │                               │
+        └──────────────────────  Next.js admin panel (frontend)
 ```
 
-This is the proposed structure; directories and features may evolve during development.
+- **Notifications** — local notifications on the device for expiry and dose reminders; push notifications from the backend where needed.
+- **Authentication** — JWT-based login; roles: `user` and `admin`.
+- **Admin** — manage users from the web panel.
+- **Medicine data** — add, update, remove and mark medicines/doses as taken through the API, with offline-first storage on the device.
 
-## Getting Started
+## Repository Structure
 
-### Prerequisites
-
-- Flutter SDK
-- Dart SDK compatible with the selected Flutter version
-- Android Studio or Xcode for platform-specific builds
-- A Firebase project for FCM functionality
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/expiry_alert.git
-   cd expiry_alert
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   flutter pub get
-   ```
-
-3. Configure Firebase for Android and iOS using the official FlutterFire setup instructions.
-
-4. Generate any required database or code-generation files, if configured:
-
-   ```bash
-   dart run build_runner build --delete-conflicting-outputs
-   ```
-
-5. Run the application:
-
-   ```bash
-   flutter run
-   ```
-
-The code-generation step is needed only if the selected database or other dependencies use generated code.
-
-## Firebase Configuration
-
-To enable Firebase Cloud Messaging:
-
-1. Create a Firebase project.
-2. Register the Android and iOS applications.
-3. Configure the platform-specific Firebase files.
-4. Initialize Firebase in the Flutter application.
-5. Request notification permissions where required.
-6. Handle foreground messages, background messages, and notification taps.
-7. Configure APNs for iOS push notifications.
-8. If remote notifications need to be sent automatically, configure a trusted backend or Cloud Functions.
-
-Do not commit service-account private keys, credentials, or other secrets to the repository.
-
-## Privacy
-
-ExpiryAlert is designed around local-first inventory management.
-
-- Household inventory can be stored on the device.
-- OCR can be performed on-device.
-- Camera access is used for scanning products and reading packaging.
-- Notification permissions are requested when needed.
-- Any future cloud synchronization or analytics should clearly explain what data is collected and why.
+```text
+MediAlert/
+├── mobile/      # Flutter app
+├── backend/     # Node.js + Express API
+├── frontend/    # Next.js admin panel (JSX)
+├── LICENSE
+└── README.md
+```
 
 ## Roadmap
 
-- [ ] Initialize the Flutter project and app theme.
-- [ ] Implement BLoC-based state management.
-- [ ] Set up local database and inventory CRUD.
-- [ ] Build the expiry dashboard.
-- [ ] Add QR and barcode scanning.
-- [ ] Implement OCR-based expiry date detection.
-- [ ] Add editable date confirmation.
-- [ ] Schedule local expiry notifications.
-- [ ] Integrate Firebase Cloud Messaging.
-- [ ] Add inventory search and category filters.
-- [ ] Test Android and iOS notification behavior.
-- [ ] Prepare the Google Play Store and Apple App Store releases.
-
-## Monetization
-
-ExpiryAlert may use Google AdMob to display advertisements and support ongoing development and maintenance.
-
-Planned monetization features:
-
-- **Banner Ads** — Display ads in appropriate, non-intrusive areas.
-- **Interstitial Ads** — Consider ads at suitable navigation points, never during critical expiry reminders or essential user actions.
-- **Privacy and Consent** — Implement applicable advertising consent requirements and provide appropriate privacy disclosures.
-- **Ad-Free Experience** — Premium options may be considered in the future.
-
-Advertising integration will be implemented with user experience, privacy, and platform policies in mind.
-
-## Privacy and Advertising
-
-ExpiryAlert is designed as an offline-first application. Household inventory and expiry dates are intended to remain on the device unless optional cloud features are introduced.
-
-If advertising is enabled:
-
-- Google Mobile Ads SDK may process device and advertising-related information as described in Google's policies.
-- Required consent and privacy controls will be implemented where applicable.
-- Test ad units will be used during development.
-- Production ad units will be configured before release.
-- A privacy policy will disclose relevant data collection, advertising, and third-party services.
-
-Advertising SDKs and their data practices will be reviewed before publishing the application.
+- [ ] Set up `backend/` (Express, database, auth, roles)
+- [ ] Medicine and dose APIs
+- [ ] Set up `frontend/` admin panel (login, user management)
+- [ ] Mobile: medicine inventory and expiry alerts
+- [ ] Mobile: dose schedule, notifications, Taken/Skip/Snooze
+- [ ] Mobile: stock and refill reminders
+- [ ] Barcode / QR / OCR scanning
+- [ ] Family profiles
+- [ ] Adherence reports
+- [ ] Backup, restore and app lock
 
 ## License
 
-ExpiryAlert is proprietary software. All rights are reserved by the copyright holder.
-
-See the [LICENSE](LICENSE) file for the applicable terms. No license to use, copy, modify, or redistribute this software is granted without explicit written permission, except where applicable law provides otherwise.
-
----
-
-**ExpiryAlert** — A smarter way to manage household expiry dates.
+MediAlert is proprietary software. All rights are reserved by the copyright holder. See [LICENSE](LICENSE).

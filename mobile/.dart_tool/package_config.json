@@ -164,7 +164,7 @@
       "languageVersion": "3.5"
     },
     {
-      "name": "expiryalert",
+      "name": "medialert",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.12"

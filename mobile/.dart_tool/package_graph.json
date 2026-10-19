@@ -1,10 +1,10 @@
 {
   "roots": [
-    "expiryalert"
+    "medialert"
   ],
   "packages": [
     {
-      "name": "expiryalert",
+      "name": "medialert",
       "version": "1.0.0+1",
       "dependencies": [
         "cupertino_icons",
