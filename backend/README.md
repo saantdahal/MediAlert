@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../brand/logo.png" alt="MediAlert logo" width="140">
+</p>
+
 # MediAlert — Backend
 
 REST API built with Node.js and Express. It handles authentication, admin user management, medicines, dose schedules and notifications.

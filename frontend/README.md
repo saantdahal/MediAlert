@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../brand/logo.png" alt="MediAlert logo" width="140">
+</p>
+
 # MediAlert — Admin Frontend
 
 Admin web panel built with **Next.js** using **JSX** (JavaScript, no TypeScript). It talks to the [backend](../backend/README.md) API.
