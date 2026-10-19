@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="../brand/logo.png" alt="MediAlert logo" width="140">
+</p>
+
 # MediAlert — Mobile
 
 Flutter app for tracking medicine expiry dates and daily dose schedules. Works offline-first and talks to the [backend](../backend/README.md) for login and optional sync.

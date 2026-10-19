@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="brand/logo.png" alt="MediAlert logo" width="200">
+</p>
+
 # MediAlert
 
 **Never miss a dose. Never use an expired medicine.**
@@ -90,10 +94,25 @@ The project is split into three parts:
 - **Admin** — manage users from the web panel.
 - **Medicine data** — add, update, remove and mark medicines/doses as taken through the API, with offline-first storage on the device.
 
+## Branding
+
+Logo and color palette live in [`brand/`](brand/).
+
+![MediAlert color palette](brand/color-palette.png)
+
+| Color | Hex |
+|---|---|
+| Deep Teal | `#0F766E` |
+| Fresh Green | `#22C55E` |
+| Dark Navy | `#0F172A` |
+| Soft Background | `#F8FAFC` |
+| White | `#FFFFFF` |
+
 ## Repository Structure
 
 ```text
 MediAlert/
+├── brand/       # Logo and color palette
 ├── mobile/      # Flutter app
 ├── backend/     # Node.js + Express API
 ├── frontend/    # Next.js admin panel (JSX)
